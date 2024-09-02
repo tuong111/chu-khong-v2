@@ -31,7 +31,8 @@ const DocumentEditor: React.FC = () => {
                 if (e.target?.result) {
                     mammoth.convertToHtml({ arrayBuffer: e.target.result as ArrayBuffer })
                         .then(result => {
-                            setEditorHtml(result.value);
+                            setEditorHtml(''); // Xóa nội dung trước khi render file mới
+                            setEditorHtml(result.value); // Render nội dung mới
                         })
                         .catch(err => {
                             console.error('Error converting file:', err);
@@ -69,7 +70,12 @@ const DocumentEditor: React.FC = () => {
 
             const range = selection.getRangeAt(0);
             const rect = range.getBoundingClientRect();
-            setPopoverPosition({ left: rect.left, top: rect.top + rect.height });
+            
+            // Sử dụng window.scrollX và window.scrollY để điều chỉnh vị trí chính xác
+            setPopoverPosition({ 
+                left: rect.left + window.scrollX, 
+                top: rect.top + rect.height + window.scrollY 
+            });
         }
     };
 

@@ -51,6 +51,11 @@ const Dicionary: React.FC = () => {
             key: 'dictionaryName'
         }
     ];
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === 'Enter') {
+            handleTranslate();
+        }
+    };
 
     return (
         <Layout className="layout">
@@ -61,6 +66,7 @@ const Dicionary: React.FC = () => {
                         value={text}
                         onChange={(e) => setText(e.target.value)}
                         placeholder="Nhập từ Hán ngữ hoặc tiếng Việt ở đây"
+                        onKeyDown={handleKeyPress}
                     />
                     <Button type="primary" onClick={handleTranslate} style={{ marginTop: '10px' }}>
                         Tìm kiếm
